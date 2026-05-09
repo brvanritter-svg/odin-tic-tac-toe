@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #04364A;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    padding-top: 1em;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: 200px 200px 200px;
+    margin-top: 2em;
+    gap: .5em;
+    border-radius: 1em;
+    width: fit-content;
+    height: fit-content;
+    padding: 1em;
+    background-color: #176B87;
+}
+
+.board button {
+    height: 200px;
+    border: none;
+    border-radius: 1em;
+    background-color: #04364A;
+}

@@ -50,7 +50,6 @@ function checkForWinner(player,board) {
         (b[2][0] == player.token && b[1][1] == player.token && b[0][2] == player.token )
     ) {
         console.log(`Congratulations ${player.name} won!`)
-        return
     }
     
 }
@@ -119,8 +118,25 @@ function gameController() {
 
     return {
         playRound,
-        getActivePlayer
+        getActivePlayer,
+        getBoard: board.getBoard
     }
 }
 
-const game = gameController();
+function screenController() {
+    const game = gameController();
+    const message = document.querySelector(".message");
+    const boardDiv = document.querySelector(".board");
+
+    const board = game.getBoard();
+
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+            const cell = document.createElement("button");
+            cell.setAttribute("class",`row-id=${i} column-id=${j}`)
+            boardDiv.append(cell);            
+        }        
+    }
+}
+
+screenController();
