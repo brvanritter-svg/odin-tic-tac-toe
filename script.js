@@ -119,7 +119,8 @@ function gameController() {
     return {
         playRound,
         getActivePlayer,
-        getBoard: board.getBoard
+        getBoard: board.getBoard,
+        availability: board.availability
     }
 }
 
@@ -133,10 +134,32 @@ function screenController() {
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             const cell = document.createElement("button");
-            cell.setAttribute("class",`row-id=${i} column-id=${j}`)
+            cell.dataset.row = i;
+            cell.dataset.column = j;
             boardDiv.append(cell);            
         }        
     }
+
+    boardDiv.addEventListener("click", (event) => {
+        const boardData = event.target.dataset;
+        const row = boardData.row;
+        const column = boardData.column;
+        const availability = game.availability(row,column)
+        game.playRound(row,column);
+        
+        const currentToken = game.getActivePlayer().token
+        
+        const tokenSVG = document.createElement('img');
+        if (availability) {       
+            if (currentToken == 'O') {
+                tokenSVG.src = "images/circle-svgrepo-com.svg"
+            }else {
+                tokenSVG.src = "images/cross-svgrepo-com.svg"
+            }
+
+            event.target.append(tokenSVG);
+        }
+    })
 }
 
 screenController();

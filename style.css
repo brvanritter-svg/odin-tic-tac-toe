@@ -33,4 +33,10 @@ h1 {
     border: none;
     border-radius: 1em;
     background-color: #04364A;
+    font-size: 32px;
+    
+}
+
+.board button img {
+    width: 100px;
 }
