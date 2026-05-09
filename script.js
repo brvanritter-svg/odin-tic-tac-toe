@@ -55,6 +55,23 @@ function checkForWinner(player,board) {
     
 }
 
+function checkForDraw(board) {
+    
+    b = board.getBoard();
+    let count = 0;
+
+    for (let i = 0; i < b.length; i++) {
+        if (!b[i].includes(null)) {
+            count++;
+        }
+    }
+
+    if (count == b.length) {
+        console.log("It's a tie!")
+    }
+
+}
+
 function gameController() {
     
     const players = [
@@ -89,6 +106,7 @@ function gameController() {
         console.log ( `Putting token in row ${row}, column ${column}`);
         
         checkForWinner(activePlayer,board);
+        checkForDraw(board);
         switchPlayer();
         printNewRound();
 
