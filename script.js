@@ -35,6 +35,26 @@ function gameBoard() {
     
 }
 
+function checkForWinner(player,board) {
+
+    let b = board.getBoard();
+
+    if (
+        (b[0][0] == player.token && b[0][1] == player.token && b[0][2] == player.token ) ||
+        (b[1][0] == player.token && b[1][1] == player.token && b[1][2] == player.token ) ||
+        (b[2][0] == player.token && b[2][1] == player.token && b[2][2] == player.token ) ||
+        (b[0][0] == player.token && b[1][0] == player.token && b[2][0] == player.token ) ||
+        (b[0][1] == player.token && b[1][1] == player.token && b[2][1] == player.token ) ||
+        (b[0][2] == player.token && b[1][2] == player.token && b[2][2] == player.token ) ||
+        (b[0][0] == player.token && b[1][1] == player.token && b[2][2] == player.token ) ||
+        (b[2][0] == player.token && b[1][1] == player.token && b[0][2] == player.token )
+    ) {
+        console.log(`Congratulations ${player.name} won!`)
+        return
+    }
+    
+}
+
 function gameController() {
     
     const players = [
@@ -67,7 +87,8 @@ function gameController() {
 
         board.putToken(row,column,activePlayer);
         console.log ( `Putting token in row ${row}, column ${column}`);
-
+        
+        checkForWinner(activePlayer,board);
         switchPlayer();
         printNewRound();
 
