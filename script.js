@@ -13,19 +13,21 @@ function gameBoard() {
 
     const getBoard = () => board;
 
+    const availability = (row,column) => board[row][column] == null ? true : false;
 
     const putToken = (row,column,player) => {
         
         if ( board[row][column] == null ) {
             board[row][column] = player.token;
-        }else{
-            return;
         }
     }
 
-    const printBoard = () => console.table(board);
+    const printBoard = () => {
+        console.table(board);
+    }
 
     return {
+        availability,
         getBoard,
         putToken,
         printBoard
@@ -48,28 +50,37 @@ function gameController() {
 
     const board = gameBoard();
 
-    const activePlayer = players[0];
+    let activePlayer = players[0];
 
-    let switchPlayer = activePlayer == players[0] ? activePlayer = players[1] : activePlayer = players[0];
+    let switchPlayer = () => activePlayer === players[0] ? activePlayer = players[1] : activePlayer = players[0];
+
+    let getActivePlayer = () => activePlayer;
 
     const printNewRound = () => {
-        board.printBoard;
+        board.printBoard();
         console.log(`${activePlayer.name}'s turn!`);
     }
 
     const playRound = (row,column) => {
+
+        if (board.availability(row,column)) {
+
         board.putToken(row,column,activePlayer);
         console.log ( `Putting token in row ${row}, column ${column}`);
 
-        switchPlayer()
-        printNewRound()
+        switchPlayer();
+        printNewRound();
+
+        } else {
+            return
+        }
     }
 
     printNewRound()
 
     return {
-        playround,
-        activePlayer
+        playRound,
+        getActivePlayer
     }
 }
 
