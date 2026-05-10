@@ -49,7 +49,7 @@ function checkForWinner(player,board) {
         (b[0][0] == player.token && b[1][1] == player.token && b[2][2] == player.token ) ||
         (b[2][0] == player.token && b[1][1] == player.token && b[0][2] == player.token )
     ) {
-        console.log(`Congratulations ${player.name} won!`)
+        return true;
     }
     
 }
@@ -66,13 +66,17 @@ function checkForDraw(board) {
     }
 
     if (count == b.length) {
-        console.log("It's a tie!")
+        return true;
     }
 
 }
 
 function gameController() {
     
+    let win = false;
+    let draw = false;
+    let gameOver = false;
+
     const players = [
         {
             name: "Player one",
@@ -94,29 +98,47 @@ function gameController() {
 
     const printNewRound = () => {
         board.printBoard();
-        console.log(`${activePlayer.name}'s turn!`);
+        const message =document.querySelector(".message");
+        message.textContent = `${activePlayer.name}'s turn...`
     }
-
+ 
     const playRound = (row,column) => {
+
+        const message = document.querySelector('.message');
+
+        if (win || draw) {
+            gameOver = true;
+            return;
+        };
 
         if (board.availability(row,column)) {
 
-        board.putToken(row,column,activePlayer);
-        console.log ( `Putting token in row ${row}, column ${column}`);
+            board.putToken(row,column,activePlayer);
+            console.log ( `Putting token in row ${row}, column ${column}`);
         
-        checkForWinner(activePlayer,board);
-        checkForDraw(board);
-        switchPlayer();
-        printNewRound();
+            win = checkForWinner(activePlayer,board);
+            draw = checkForDraw(board);
+            
+            if (win) {
+                message.textContent = `Congratulations! ${activePlayer.name} won this round.`;
+                return;
+            }
 
-        } else {
-            return
-        }
+            if (draw) {
+                message.textContent = `It's a tie!`;
+                return;
+            }
+            
+            printNewRound();
+            switchPlayer();
+
+            }
     }
 
     printNewRound()
 
     return {
+        gameOver: () => gameOver,
         playRound,
         getActivePlayer,
         getBoard: board.getBoard,
@@ -145,12 +167,14 @@ function screenController() {
         const row = boardData.row;
         const column = boardData.column;
         const availability = game.availability(row,column)
-        game.playRound(row,column);
+        
         
         const currentToken = game.getActivePlayer().token
         
+        game.playRound(row,column);
+        
         const tokenSVG = document.createElement('img');
-        if (availability) {       
+        if (availability && !game.gameOver()) {       
             if (currentToken == 'O') {
                 tokenSVG.src = "images/circle-svgrepo-com.svg"
             }else {
