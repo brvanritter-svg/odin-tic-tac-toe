@@ -106,6 +106,7 @@ function gameController() {
 
         const message = document.querySelector('.message');
 
+
         if (win || draw) {
             gameOver = true;
             return;
@@ -128,16 +129,17 @@ function gameController() {
                 message.textContent = `It's a tie!`;
                 return;
             }
-            
-            printNewRound();
+
             switchPlayer();
+            printNewRound();
+            
 
             }
     }
 
-    printNewRound()
 
     return {
+        printNewRound,
         gameOver: () => gameOver,
         playRound,
         getActivePlayer,
@@ -152,6 +154,8 @@ function screenController() {
     const boardDiv = document.querySelector(".board");
 
     const board = game.getBoard();
+
+    game.printNewRound();
 
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
@@ -170,6 +174,7 @@ function screenController() {
         
         
         const currentToken = game.getActivePlayer().token
+        
         
         game.playRound(row,column);
         
