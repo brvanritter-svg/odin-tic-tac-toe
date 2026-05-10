@@ -76,21 +76,28 @@ function gameController() {
     let win = false;
     let draw = false;
     let gameOver = false;
+    let activePlayer;
+    let players;
 
-    const players = [
-        {
-            name: "Player one",
-            token: "X"
-        },
-        {
-            name: "Player two",
-            token: "O"
-        }
-    ]
+    function startGame(player1,player2) {
+        players = [
+            {
+                name: player1,
+                token: "X"
+            },
+            {
+                name: player2,
+                token: "O"
+            }
+        ]    
+        activePlayer = players[0];    
+    }
+
+    const restartButton = document.querySelector('.restart-button');
+    restartButton.style.display = "none";
 
     const board = gameBoard();
 
-    let activePlayer = players[0];
 
     let switchPlayer = () => activePlayer === players[0] ? activePlayer = players[1] : activePlayer = players[0];
 
@@ -105,7 +112,6 @@ function gameController() {
     const playRound = (row,column) => {
 
         const message = document.querySelector('.message');
-
 
         if (win || draw) {
             gameOver = true;
@@ -122,11 +128,13 @@ function gameController() {
             
             if (win) {
                 message.textContent = `Congratulations! ${activePlayer.name} won this round.`;
+                restartButton.style.display = "block"
                 return;
             }
 
             if (draw) {
                 message.textContent = `It's a tie!`;
+                restartButton.style.display = "block"
                 return;
             }
 
@@ -139,6 +147,7 @@ function gameController() {
 
 
     return {
+        startGame,
         printNewRound,
         gameOver: () => gameOver,
         playRound,
@@ -152,7 +161,17 @@ function screenController() {
     const game = gameController();
     const message = document.querySelector(".message");
     const boardDiv = document.querySelector(".board");
+    const form = document.querySelector("form");
+    const playerOne = document.querySelector("#name-player-1").value
+    const playerTwo = document.querySelector("#name-player-2").value
 
+    boardDiv.replaceChildren()
+
+    form.style.display = "none";
+    boardDiv.style.display = "grid";
+
+    game.startGame(playerOne,playerTwo);
+    
     const board = game.getBoard();
 
     game.printNewRound();
@@ -191,4 +210,10 @@ function screenController() {
     })
 }
 
-screenController();
+const startButton = document.querySelector(".start-game-button");
+
+startButton.addEventListener("click", () => screenController())
+
+const restartButton = document.querySelector(".restart-button");
+
+restartButton.addEventListener("click", () => screenController());

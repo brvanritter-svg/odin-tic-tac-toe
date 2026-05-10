@@ -17,7 +17,7 @@ h1 {
 }
 
 .board {
-    display: grid;
+    display: none;
     grid-template-columns: 200px 200px 200px;
     margin-top: 2em;
     gap: .5em;
@@ -39,4 +39,53 @@ h1 {
 
 .board button img {
     width: 100px;
+}
+form {
+    height: 80vh;
+    justify-content: center;
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+
+}
+form div {
+    display: flex;
+    gap: 2em;
+}
+
+fieldset {
+    color: white;
+    border-radius: 16px;
+    padding: 0em 1em 1em 1em;
+}
+fieldset legend {
+    padding: 0 .5em;
+}
+fieldset label {
+    margin: .5em;
+}
+fieldset input {
+    margin: 1em .5em .5em;
+    border-radius: 16px;
+    border: none;
+    padding: .5em;
+}
+fieldset input:focus {
+    outline: none;
+}
+form button , .restart-button {
+    padding: .5em 1em;
+    margin: 2em;
+    color: white;
+    background-color: #2ECC71;
+    border: none;
+    border-radius: 1em;
+    font-size: 16px;
+    width: fit-content;
+    align-self: center;
+    cursor: pointer;
+    text-align: center;
+}
+.restart-button {
+    display: none;
 }

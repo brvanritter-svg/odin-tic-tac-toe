@@ -7,8 +7,28 @@
     <title>Document</title>
 </head>
 <body>
-    <h1 class="message">Tic-Tac-Toe</h1>
+    <h1 class="message">Tic-Tac-Toe </h1>
+   <br><button class="restart-button">RESTART</button> 
     <div class="board"></div>
+        <form action="">
+            <div><fieldset>
+                <legend>
+                    Player 1 <img src="images/cross-svgrepo-com.svg" alt="" width="12px">
+                </legend>
+                <label for="name-player-1">Name</label>
+                <input type="text" name="name1" id="name-player-1" required>
+
+            </fieldset>
+            <fieldset>
+                <legend>
+                    Player 2 <img src="images/circle-svgrepo-com.svg" alt="" width="12px">
+                </legend>
+                <label for="name-player-2">Name</label>
+                <input type="text" name="name2" id="name-player-2" required>
+            </fieldset></div>
+            <button class="start-game-button" type="button">START GAME</button>
+        </form>
+    
     <script src="script.js"></script>
 </body>
 </html>
